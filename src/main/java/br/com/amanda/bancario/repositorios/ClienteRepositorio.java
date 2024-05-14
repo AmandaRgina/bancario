@@ -1,4 +1,4 @@
-package br.com.amanda.bancario.repositorio;
+package br.com.amanda.bancario.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
