@@ -32,4 +32,8 @@ public class ClienteServico {
 	public void deletarCliente(Integer cod) {
 		clienteRepositorio.deleteById(cod);
 	}
+	
+	public Cliente atualizarCliente(Integer cod, Cliente cliente) {
+		return clienteRepositorio.save(cliente);
+	}
 } 
