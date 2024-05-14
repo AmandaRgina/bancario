@@ -49,13 +49,20 @@ public class ClienteControlador {
 	@PutMapping("/{cod}")
 	public ResponseEntity<Cliente> atualizarCliente(@PathVariable Integer cod, @RequestBody Cliente cliente){
 		
-		Cliente clienteExistente = clienteServico.encontrarClientePorId(cod);
+		Optional<Cliente> clienteOptional = clienteServico.encontrarClientePorId(cod);
 		
-		if(clienteExistente == null) {
+		if(clienteOptional.isPresent()) {
+			Cliente clienteExistente = clienteOptional.get();
+			clienteExistente.setEmail(cliente.getEmail());
+			
+			Cliente clienteAtualizado = clienteServico.atualizarCliente(cod, clienteExistente);
+			return ResponseEntity.ok(clienteAtualizado);
+		} else {
+			
 			return ResponseEntity.notFound().build();
 		}
 		
-		clienteExistente.
+		
 	}
 	
 	@DeleteMapping("/{cod}")
