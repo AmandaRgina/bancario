@@ -1,6 +1,7 @@
 package br.com.amanda.bancario.servico;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,17 @@ public class ClienteServico {
 		return clienteRepositorio.findAll();
 	}
 
-}
+	public Optional<Cliente> encontrarClientePorId(Integer cod){
+		
+		return clienteRepositorio.findById(cod);
+	}
+	
+	public Cliente criarCliente(Cliente cliente) {
+		
+		return clienteRepositorio.save(cliente);
+	}
+	
+	public void deletarCliente(Integer cod) {
+		clienteRepositorio.deleteById(cod);
+	}
+} 
