@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import br.com.amanda.bancario.entidades.Cliente;
 import br.com.amanda.bancario.servicos.ClienteServico;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 public class ClienteControlador {
 
 	@Autowired
@@ -30,7 +31,7 @@ public class ClienteControlador {
 		return clienteServico.listarClientes();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{cod}")
 	public ResponseEntity<Cliente> encontrarClientePorId(@PathVariable Integer cod){
 		
 		Optional<Cliente> cliente = clienteServico.encontrarClientePorId(cod);
@@ -45,7 +46,19 @@ public class ClienteControlador {
 		return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
 	}
 	
-	@DeleteMapping("/{id}")
+	@PutMapping("/{cod}")
+	public ResponseEntity<Cliente> atualizarCliente(@PathVariable Integer cod, @RequestBody Cliente cliente){
+		
+		Cliente clienteExistente = clienteServico.encontrarClientePorId(cod);
+		
+		if(clienteExistente == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		clienteExistente.
+	}
+	
+	@DeleteMapping("/{cod}")
 	public ResponseEntity<Void> deletarCliente(@PathVariable Integer cod){
 		
 		clienteServico.deletarCliente(cod);
