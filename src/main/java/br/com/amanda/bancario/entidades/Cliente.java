@@ -19,11 +19,9 @@ public class Cliente {
 	private Integer cod;
 	
 	@Getter
-	@Setter
 	private String nome;
 	
 	@Getter
-	@Setter
 	private String cpf;
 	
 	@Getter
