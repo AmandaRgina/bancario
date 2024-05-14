@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +33,7 @@ public class Saldo {
 	@Getter
 	private Cliente cliente;
 	
-	@OneToOne
+	@OneToMany
 	@JoinColumn(name = "transacoes_id")
 	@Getter
 	private List<Transacao> transacoes;
