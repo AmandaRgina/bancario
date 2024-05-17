@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.amanda.bancario.entidades.Cliente;
+import br.com.amanda.bancario.entidades.Saldo;
+import br.com.amanda.bancario.entidades.Transacao;
 import br.com.amanda.bancario.servicos.ClienteServico;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteControlador {
 
 	@Autowired
@@ -49,20 +52,13 @@ public class ClienteControlador {
 	@PutMapping("/{cod}")
 	public ResponseEntity<Cliente> atualizarCliente(@PathVariable Integer cod, @RequestBody Cliente cliente){
 		
-		Optional<Cliente> clienteOptional = clienteServico.encontrarClientePorId(cod);
-		
-		if(clienteOptional.isPresent()) {
-			Cliente clienteExistente = clienteOptional.get();
-			clienteExistente.setEmail(cliente.getEmail());
-			
-			Cliente clienteAtualizado = clienteServico.atualizarCliente(cod, clienteExistente);
+		try {
+			Cliente clienteAtualizado = clienteServico.atualizarCliente(cod, cliente);
 			return ResponseEntity.ok(clienteAtualizado);
-		} else {
+		}catch(Exception e){
 			
 			return ResponseEntity.notFound().build();
 		}
-		
-		
 	}
 	
 	@DeleteMapping("/{cod}")
@@ -70,6 +66,12 @@ public class ClienteControlador {
 		
 		clienteServico.deletarCliente(cod);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PostMapping ("/{cod}/transacoes")
+	public ResponseEntity<Saldo> criarTransacao(@PathVariable Integer cod, @RequestBody Transacao transacao){
+		
+		
 	}
 	
 }
